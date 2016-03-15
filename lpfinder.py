@@ -57,11 +57,6 @@ class Car:
         car = self.get()
         return car.car_rect, car.plate_rect
 
-    def detect_features(self, image):
-        if descrs is None:  # detectAndCompute returns descs=None if not keypoints found
-            descrs = []
-        return keypoints, descrs
-    
     def get_number_of_matches(self, image, image2, preview=False):
         kp_car, des_car     = self.detector.detectAndCompute(image, None)
         kp_frame, des_frame = self.detector.detectAndCompute(image2, None)
@@ -126,7 +121,6 @@ class Finder:
         if len(cars_rects) == 0:
             return 
         cars_rects[:,2:] += cars_rects[:,:2]
-        print(cars_rects)
         for car_rect in cars_rects:
             car_img = self.crop(car_rect, img, copy = True)
             plate_rect = self.plate_cascade.detectMultiScale(car_img,
